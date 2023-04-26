@@ -1,0 +1,104 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div class="container">
+        <h2>{{ listing.title }}</h2>
+        <p>{{ listing.description }}</p>
+        <p>Current bid: ${{ listing.current_bid }}</p>
+        {% if listing.image_url %}
+        <img src="{{ listing.image_url }}" alt="{{ listing.title }}" class="img-thumbnail" style="width: auto; height: 400px;">
+        {% else %}
+        <p>No photo available</p>
+        {% endif %}
+
+        <!-- TODO: add watchlist and bid form -->
+        {% if listing.active %}
+            {% if user.is_authenticated %}
+                {% if user == listing.user %}  
+                    <form action="{% url 'close_listing' listing.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Close Listing</button>
+                    </form>
+                {% endif %}
+
+                {% if user != listing.user %}        
+                    {% if listing in user.wishlist.all %}
+                        <form action="{% url 'remove_wishlist' listing.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Remove from Wishlist</button>
+                        </form>
+                    {% else %}
+                        <form action="{% url 'add_wishlist' listing.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Add to Wishlist</button>
+                        </form>
+                    {% endif %}
+
+                    {% if message1 %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message1 }}
+                        </div>
+                    {% endif %}
+                    {% if message2 %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message2 }}
+                        </div>
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-header">
+                        <h3>Place a Bid</h3>
+                        </div>
+                        <div class="card-body">
+                        <form method="post" action="{% url 'bid' listing.id %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Place Bid</button>
+                        </form>
+                        </div>
+                    </div>          
+                {% endif %}
+                <div class="card">
+                    <div class="card-header">
+                    <h3>Write a comment</h3>
+                    </div>
+                    <div class="card-body">
+                    <form method="post" action="{% url 'comment' listing.id %}">
+                        {% csrf_token %}
+                        {{ form2.as_p }}
+                        <button type="submit" class="btn btn-primary">Comment</button>
+                    </form>
+                    </div>
+                </div>        
+            {% endif %}
+        {% else %}
+            {% if user == listing.winner%}
+                <div class="alert alert-success" role="alert">
+                    <p>This listing has been won by you.</p>
+                </div>
+            {% else %}
+                <div class="alert alert-success" role="alert">
+                    <p>This listing has been won by {{ listing.winner}}.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!-- TODO: display comments -->
+        {% if comments %}
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h5>Comments</h5>
+                </div>
+                <div class="card-body">
+                    {% for comment in comments %}
+                    <div class="media mb-3">
+                        <div class="media-body">
+                            <h6 class="mt-0">{{ comment.user }} <small class="text-muted">{{ comment.date }}</small></h6>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}        
+    </div>
+{% endblock %}

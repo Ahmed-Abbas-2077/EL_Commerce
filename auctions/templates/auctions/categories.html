@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <ul>
+        <li><a href="{% url 'category_listing' 'Fashion' %}">Fashion</a></li>
+        <li><a href="{% url 'category_listing' 'Electronics' %}">Electronics</a></li>
+        <li><a href="{% url 'category_listing' 'Home' %}">Home</a></li>
+        <li><a href="{% url 'category_listing' 'Health and Beauty' %}">Health and Beauty</a></li>
+        <li><a href="{% url 'category_listing' 'Toys' %}">Toys</a></li>
+        <li><a href="{% url 'category_listing' 'Sports and Outdoors' %}">Sports and Outdoors</a></li>
+        <li><a href="{% url 'category_listing' 'Automotive' %}">Automotive</a></li>
+        <li><a href="{% url 'category_listing' 'Books' %}">Books</a></li>
+        <li><a href="{% url 'category_listing' 'Movies and Music' %}">Movies and Music</a></li>
+        <li><a href="{% url 'category_listing' 'Collectibles' %}">Collectibles</a></li>
+        <li><a href="{% url 'category_listing' 'Art' %}">Art</a></li>
+        <li><a href="{% url 'category_listing' 'Other' %}">Other</a></li>
+    </ul>
+
+{% endblock %}
