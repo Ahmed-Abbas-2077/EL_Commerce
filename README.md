@@ -45,7 +45,7 @@ Start the development server:
     
 Open your web browser and navigate to http://localhost:8000 to access the application.
 
-# Contributing
+## Contributing
 
 🤝 Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
 
