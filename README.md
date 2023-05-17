@@ -32,7 +32,7 @@ This project is an e-commerce platform developed as part of a web development co
 To run this project locally, follow these steps:
 
 1. Clone the repository:
-    git clone https://github.com/your-username/your-repository.git
+    git clone [https://github.com/your-username/your-repository.git](https://github.com/Ahmed-Abbas-2077/EL_Commerce.git)
     
 Install the project dependencies:
     pip install -r requirements.txt
